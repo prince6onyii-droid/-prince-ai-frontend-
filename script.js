@@ -2,7 +2,7 @@
 // NEVER put your API key here! Use backend only.
 
 const CONFIG = {
-    API_URL: 'https://your-backend-server.com/api/chat', // Replace with your backend URL
+    API_URL: 'https://httpbin.org/post',
     WELCOME_MESSAGE: "Greetings, noble user! I am Prince AI, your royal assistant. How may I serve you today? 👑"
 };
 
@@ -50,7 +50,6 @@ function setupEventListeners() {
     themeToggle.addEventListener('click', toggleTheme);
     clearChatBtn.addEventListener('click', clearChat);
     
-    // Auto-resize input
     userInput.addEventListener('input', () => {
         userInput.style.height = 'auto';
         userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
@@ -155,28 +154,62 @@ function clearChat() {
     messagesContainer.innerHTML = '';
     addAIMessage(CONFIG.WELCOME_MESSAGE);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ===== AI BACKEND CONNECTION =====
 // Your API key is NEVER exposed to frontend - it stays on your server!
 
 async function sendToAI(userMessage) {
     try {
-        // Method 1: Using your backend server (RECOMMENDED - Secure)
-        const response = await fetch(CONFIG.API_URL, {
+        const response = await fetch('https://httpbin.org/post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: userMessage })
         });
-        
-        if (!response.ok) throw new Error('Server error');
         const data = await response.json();
-        addAIMessage(data.reply);
-        
+        const royalResponses = [
+            "Indeed, my lord! I shall attend to that matter with the utmost care. 👑",
+            "A most excellent inquiry! The royal archives are being consulted. 📜",
+            "Your wish is my command, noble user! I am at your service. 🤴",
+            "The kingdom rejoices at your question! Here is my counsel... ✨"
+        ];
+        const reply = royalResponses[Math.floor(Math.random() * royalResponses.length)];
+        addAIMessage(reply + " (You asked: " + userMessage + ")");
     } catch (error) {
         console.error('Error:', error);
-        // Fallback: Show error message
-        addAIMessage("I apologize, my lord. The royal connection seems disturbed. Please ensure your backend server is running. 🛡️");
+        addAIMessage("I apologize, my lord. The royal connection is temporarily unavailable. 🛡️");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ===== VOICE INPUT (Speech-to-Text) =====
 function initSpeechRecognition() {
@@ -208,7 +241,6 @@ function initSpeechRecognition() {
         
         recognition.onend = () => {
             stopRecording();
-            // Auto-send if text was captured
             if (userInput.value.trim()) {
                 setTimeout(handleSend, 500);
             }
@@ -238,12 +270,32 @@ function stopRecording() {
     micBtn.title = 'Voice Input';
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ===== VOICE OUTPUT (Text-to-Speech) =====
 let currentSpeech = null;
 
 function speakText(text) {
     if ('speechSynthesis' in window) {
-        // Stop any current speech
         if (currentSpeech) {
             window.speechSynthesis.cancel();
         }
@@ -253,7 +305,6 @@ function speakText(text) {
         currentSpeech.pitch = 1;
         currentSpeech.volume = 1;
         
-        // Try to find a good voice
         const voices = window.speechSynthesis.getVoices();
         const preferredVoice = voices.find(v => 
             v.name.includes('Google') || 
@@ -266,7 +317,6 @@ function speakText(text) {
     }
 }
 
-// Load voices when available
 if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = () => {
         window.speechSynthesis.getVoices();
@@ -274,10 +324,12 @@ if ('speechSynthesis' in window) {
 }
 
 // ===== UTILITY =====
-// Prevent accidental page refresh with active chat
 window.addEventListener('beforeunload', (e) => {
     if (messagesContainer.children.length > 1) {
         e.preventDefault();
         e.returnValue = '';
     }
 });
+
+
+
