@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince AI - Royal Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcome-screen">
+        <div class="crown">👑</div>
+        <h1>Prince AI</h1>
+        <p class="tagline">Your Royal AI Assistant</p>
+        <p class="subtitle">Powered by Groq • Elegant • Fast</p>
+        <button class="start-btn" onclick="startChat()">
+            <span>Enter the Royal Court</span>
+            <span class="arrow">→</span>
+        </button>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="chat-interface hidden" id="chat-interface">
+        <div class="chat-header">
+            <div class="header-left">
+                <span class="crown-small">👑</span>
+                <span class="title">Prince AI</span>
+                <span class="status-dot"></span>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme">🌙</button>
+                <button class="icon-btn" id="clear-chat" title="Clear Chat">🗑️</button>
+            </div>
+        </div>
+        
+        <div class="chat-container" id="chat-container">
+            <div class="messages" id="messages"></div>
+            <div class="typing-indicator hidden" id="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <button class="mic-btn" id="mic-btn" title="Voice Input">🎤</button>
+            <textarea id="user-input" placeholder="Speak to Prince AI..." rows="1"></textarea>
+            <button class="send-btn" id="send-btn">➤</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
